@@ -170,6 +170,8 @@ if args.use_attribute and attributes is not None:
         node_information = attributes
 
 if args.only_predict:  # no need to use negatives
+    #parallel mode should be disable for prediction
+    args.no_parallel = True
     _, test_graphs, max_n_label = links2subgraphs(
         A, 
         None, 
@@ -377,7 +379,7 @@ print('Test Results')
 print(tabulate(test_losses, headers=["loss","acc", "auc"]))
 #print(test_losses)
 
-if args.save_model:
+if args.save_model or args.save_model == 'True':
     model_name = 'data/{}_model.pth'.format(args.data_name)
     print('Saving final model states to {}...'.format(model_name))
     torch.save(classifier.state_dict(), model_name)

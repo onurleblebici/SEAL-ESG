@@ -159,8 +159,10 @@ def subgraph_extraction_labeling(ind, A, h=1, max_nodes_per_hop=None,
         nodes = nodes.union(fringe)
         nodes_dist += [dist] * len(fringe)
     # move target nodes to top
-    nodes.remove(ind[0])
-    nodes.remove(ind[1])
+    if ind[0] in nodes:
+        nodes.remove(ind[0])
+    if ind[1] in nodes:
+        nodes.remove(ind[1])
     nodes = [ind[0], ind[1]] + list(nodes) 
     subgraph = A[nodes, :][:, nodes]
     # apply node-labeling
